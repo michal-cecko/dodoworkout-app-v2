@@ -1,0 +1,221 @@
+.card {
+    padding: 1rem;
+    border: 1px solid #EDEDED;
+    border-radius: 1.5rem;
+    background-color: var(--card-background, white);
+    position: relative;
+    container-type: inline-size;
+    container-name: card;
+
+    &[data-sale="true"]::before {
+        content: 'Sale!';
+        @apply bg-primary text-white absolute top-8 z-10 left-8 rounded-full px-3 py-1 font-bold uppercase text-xs;
+    }
+
+    &[data-highlight="true"] {
+        --tag-background: white;
+        column-gap: 2rem;
+
+        @apply lg:grid lg:grid-cols-2 lg:pr-8 lg:gap-10 lg:col-span-2 border-none lg:col-span-2 bg-primary text-white w-full border-none;
+
+        .image-container {
+            @apply lg:row-span-4 lg:h-full;
+        }
+
+        time {
+            color: white;
+        }
+
+        .cta-link {
+            color: white;
+        }
+
+        .tags {
+            padding-top: 4px;
+        }
+
+        .cta-link::after {
+            content: url('data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8L22 12M22 12L18 16M22 12H2" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>') !important;
+        }
+    }
+
+    .image-container {
+        height: 219px;
+        background-color: #F3F4F6;
+        border-radius: 0.75rem;
+        margin-bottom: 1.25rem;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .date-badge {
+        position: absolute;
+        z-index: 10;
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .title {
+        font-weight: bold;
+        font-family: 'Noto Sans', sans-serif;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-container {
+        background-color: var(--tag-background, #f8f8f8);
+        padding: 1rem;
+        border-radius: 0.75rem;
+        margin-bottom: 1rem;
+        font-size: 0.875rem;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .tags {
+        @apply flex gap-2 items-center flex-wrap mb-3;
+
+        .tag {
+            background-color: var(--tag-background, white);
+            @apply text-xs text-black px-[10px] py-2 rounded-lg leading-none;
+        }
+    }
+
+    time {
+        font-size: 12px;
+
+        @apply text-textSecondary;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+    }
+
+    .hidden-lg {
+        display: none;
+    }
+
+    .description {
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+        color: #555555;
+    }
+
+    .price-cta-container {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        align-self: end;
+
+        .price {
+            font-size: 1.5rem;
+            color: #212121;
+        }
+
+        .sale-price {
+            font-size: 1.5rem;
+            color: #212121;
+            @apply text-primary font-bold;
+        }
+
+        &:has(.sale-price) .price {
+            text-decoration: line-through;
+            text-decoration-thickness: 2px;
+            @apply text-lg;
+        }
+
+
+        .cta-link {
+            font-weight: bold;
+            font-size: 0.875rem;
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            &::after {
+                content: url('data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8L22 12M22 12L18 16M22 12H2" stroke="%23EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+                width: 24px;
+                height: 24px;
+                transition: translate .2s ease-in-out;
+            }
+
+            &:hover::after {
+                translate: 5px;
+            }
+        }
+    }
+
+}
+
+.card-holder {
+    &.white {
+        background-color: white;
+        --card-background: #F8F8F8;
+        --tag-background: white;
+    }
+
+    &.gray {
+        background-color: #F8F8F8;
+        --card-background: white;
+        --tag-background: #F8F8F8;
+    }
+}
+
+.date-badge {
+    --border-radius: 0.5rem;
+
+    background-color: white;
+    width: 3.5rem;
+    overflow: hidden;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    color: #373737;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: var(--border-radius);
+
+    .month {
+        font-size: 0.75rem;
+        color: white;
+        width: 100%;
+        text-align: center;
+        padding: 0.25rem 0;
+        line-height: 1;
+        font-weight: bold;
+        border-top-left-radius: var(--border-radius);
+        border-top-right-radius: var(--border-radius);
+
+        @apply bg-primary;
+    }
+
+    .day {
+        display: block;
+        width: 100%;
+        text-align: center;
+        border-bottom-left-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
+    }
+
+    &[data-variant="lg"] {
+        --border-radius: 0.75rem;
+        width: 83px;
+        font-size: 1.65rem;
+
+        .month {
+            font-size: 1.25rem;
+            padding: 0.65rem 0;
+        }
+    }
+}

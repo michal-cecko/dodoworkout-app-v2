@@ -1,0 +1,11 @@
+.order-form {
+    .order-summary {
+        .item {
+            text-align: right;
+            &:not(:first-child)::before {
+                content: "\A";
+                display: block;
+            }
+        }
+    }
+}

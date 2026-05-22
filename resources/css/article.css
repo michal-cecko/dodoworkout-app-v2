@@ -1,0 +1,265 @@
+.content-builder {
+    hr {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        border-color: #DEDEDE;
+    }
+
+    table {
+        --border: 1px solid #DEDEDE;
+        border-radius: 16px;
+        border-spacing: 0;
+        border-collapse: separate;
+        border: var(--border);
+        width: 100%;
+        margin-bottom: 3rem;
+        overflow-x: auto;
+        display: block; /* This allows the table to scroll horizontally */
+    }
+
+    table tbody {
+        min-width: 600px;
+        display: table; /* This preserves table layout within the scrollable container */
+        width: 100%;
+    }
+
+    th {
+        background-color: #ffffff;
+    }
+
+    th p {
+        color: #212121;
+    }
+
+    td {
+        background-color: #f8f8f8;
+    }
+
+    th,
+    td {
+        padding: 0.75rem;
+        vertical-align: top;
+        text-align: left;
+    }
+
+    th:not(:last-child),
+    td:not(:last-child) {
+        border-right: var(--border);
+    }
+
+    p {
+        margin: 0 !important;
+    }
+
+    thead > tr:not(:last-child) > th,
+    thead > tr:not(:last-child) > td,
+    tbody > tr:not(:last-child) > th,
+    tbody > tr:not(:last-child) > td,
+    tfoot > tr:not(:last-child) > th,
+    tfoot > tr:not(:last-child) > td,
+    tr:not(:last-child) > td,
+    tr:not(:last-child) > th,
+    thead:not(:last-child),
+    tbody:not(:last-child),
+    tfoot:not(:last-child) {
+        border-bottom: var(--border);
+    }
+
+    /* Details/summary element styles */
+    details {
+        margin-bottom: 2rem;
+        border: 1px solid #DEDEDE;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    /* Remove default browser triangle */
+    summary {
+        padding: 1rem;
+        background-color: #ffffff;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.2s ease;
+        list-style: none;
+        position: relative;
+        padding-left: 2.5rem; /* Make room for our custom caret */
+    }
+
+    /* Remove default triangle in Firefox */
+    summary::-webkit-details-marker {
+        display: none;
+    }
+
+    /* Create custom caret */
+    summary::before {
+        content: '';
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%) rotate(-45deg);
+        width: 0.5rem;
+        height: 0.5rem;
+        border-right: 2px solid #666;
+        border-bottom: 2px solid #666;
+        transition: transform 0.3s ease;
+    }
+
+    /* Rotate caret when details is open */
+    details[open] summary::before {
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    summary:hover {
+        background-color: #eaeaea;
+    }
+
+    [data-type="details-content"] {
+        padding: 1rem;
+        border-top: 1px solid #DEDEDE;
+        background-color: #F8f8f8;
+    }
+
+    /* Grid builder styles */
+    .filament-tiptap-grid-builder {
+        display: grid;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    [data-youtube-video] {
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .filament-tiptap-grid-builder__column {
+        min-width: 0; /* Prevents overflow of columns */
+    }
+
+    /* Make grid responsive */
+    @media (max-width: 768px) {
+        .filament-tiptap-grid-builder[data-stack-at="md"] {
+            grid-template-columns: 1fr !important; /* Force single column at md breakpoint */
+        }
+
+        .filament-tiptap-grid-builder[data-stack-at="md"] .filament-tiptap-grid-builder__column {
+            grid-column: 1 !important; /* Force all columns to span the entire width */
+        }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-bottom: 1rem;
+        margin-top: 3rem;
+        font-family: 'Noto Sans', sans-serif;
+        @apply font-bold;
+    }
+
+    h1 {
+        @apply text-3xl;
+    }
+
+    h2 {
+        @apply text-2xl;
+    }
+
+    h3 {
+        @apply text-xl;
+    }
+
+    h4 {
+        @apply text-lg;
+    }
+
+    h5 {
+        @apply text-base;
+    }
+
+    h6 {
+        @apply text-sm;
+    }
+
+    .image-container {
+        @apply my-9;
+
+        .image-container-image {
+            @apply rounded-3xl overflow-hidden mb-4;
+
+            img {
+                @apply w-full h-auto object-cover;
+            }
+        }
+
+        .image-container-caption {
+            @apply max-w-[342px] text-center mx-auto text-xs text-textSecondary;
+        }
+    }
+
+    ul {
+        @apply mb-6;
+
+        li {
+            font-size: 1.125rem;
+            @apply text-textSecondary gap-4 flex items-start mb-3 last:mb-0;
+
+            &::before {
+                content: url('data:image/svg+xml,<svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="4" fill="%23EF4444"/></svg>');
+            }
+        }
+    }
+
+
+    p {
+        font-size: 1.125rem;
+        @apply mb-4 text-textSecondary;
+    }
+
+    .quote {
+        @apply border-l-[3px] border-primary pl-6 py-2 mt-6 mb-6;
+
+        .quote-text {
+            font-family: 'Noto Sans', sans-serif;
+
+            @apply text-xl font-bold mb-4;
+        }
+
+        .quote-author-name {
+            @apply text-primary font-bold text-base block;
+        }
+
+        .quote-author-title {
+            @apply text-base;
+        }
+    }
+
+    a:not([data-fslightbox]) {
+        @apply text-primary font-bold underline inline-flex items-center gap-1;
+
+        &::after {
+            content: url('data:image/svg+xml,<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23clip0_357_1915)"><path d="M8.125 1.625H11.375M11.375 1.625V4.875M11.375 1.625L5.41667 7.58333M9.75 7.04167V10.2917C9.75 10.579 9.63586 10.8545 9.4327 11.0577C9.22953 11.2609 8.95398 11.375 8.66667 11.375H2.70833C2.42102 11.375 2.14547 11.2609 1.9423 11.0577C1.73914 10.8545 1.625 10.579 1.625 10.2917V4.33333C1.625 4.04602 1.73914 3.77047 1.9423 3.5673C2.14547 3.36414 2.42102 3.25 2.70833 3.25H5.95833" stroke="%23EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_357_1915"><rect width="13" height="13" fill="white"/></clipPath></defs></svg>');
+        }
+    }
+
+    .tags {
+        @apply flex gap-4 items-center flex-wrap mb-3 mt-6 text-xs;
+
+        .tag {
+            @apply border border-[#EDEDED] px-2 py-1 rounded-xl text-textSecondary bg-[#F8F8F8];
+        }
+    }
+
+    .gallery {
+        @apply my-9 columns-3 max-lg:columns-2 max-sm:columns-1;
+
+        .gallery-item {
+            @apply mb-3;
+
+            img {
+                @apply rounded-xl w-full h-full object-cover;
+            }
+        }
+    }
+}

@@ -6,11 +6,15 @@ use App\Models\Event;
 use App\Models\FormSubmission;
 use App\Models\Order;
 use Exception;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class OrderCreated extends Notification
+class OrderCreated extends Notification implements ShouldQueue
 {
+    use Queueable;
+
     protected Event $event;
     protected ?FormSubmission $formSubmission;
 

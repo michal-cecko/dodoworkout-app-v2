@@ -1,11 +1,266 @@
-@import 'tailwindcss';
+@import url('./card.css');
+@import url('./filter.css');
+@import url('./article.css');
+@import url('./swiper.css');
+@import url('./order.css');
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+:root {
+    --max-container-width: 1400px;
+    --container-padding: 2rem;
+    --header-height: 110px;
+    --primary-color: #EF4444;
+}
+
+.sale-tag {
+    @apply bg-primary text-white rounded-full px-3 py-1 font-bold uppercase text-xs w-fit;
+}
+
+.highlight {
+    @apply text-primary;
+}
+
+.workshop-right {
+    @apply relative max-lg:static;
+
+    &::before {
+        background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23EDEDED' stroke-width='6' stroke-dasharray='6%2c 14' stroke-dashoffset='30' stroke-linecap='square'/%3e%3c/svg%3e");
+        content: "";
+        @apply absolute top-0 left-0 w-[3px] h-full z-[1] max-lg:hidden;
+    }
+}
+
+.workshop-left {
+    @apply max-lg:relative;
+
+    &::after {
+        background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23EDEDED' stroke-width='6' stroke-dasharray='6%2c12' stroke-dashoffset='30' stroke-linecap='square'/%3e%3c/svg%3e");
+        content: "";
+        @apply hidden absolute bottom-0 left-0 w-full h-[3px] z-[1] max-lg:block;
+    }
+}
+
+body {
+    font-family: 'Nunito', sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 100dvh;
+    color: #212121;
+
+    &:has(#bootcamps) {
+        background-color: #F8F8F8;
+    }
+
+    &:has(#bootcamp) {
+        background-color: #F8F8F8;
+    }
+
+    &:has(#hp_hero) #header {
+        --icons-color: white;
+        --cart-indicator-color: #212121;
+    }
+
+    &:has(input#menu-toggle:checked) {
+        aside#mobile-menu {
+            transform: translateX(0);
+        }
+    }
+}
+
+.hfont {
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.btn {
+    --_loading-color: black;
+
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 12px 28px;
+    border-radius: 10px;
+    line-height: 1;
+    font-family: 'Noto Sans', sans-serif;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 14px;
+    transition: background-color 0.2s ease-in-out;
+    position: relative;
+
+    &[data-loading="true"] {
+        @apply cursor-wait pointer-events-none !text-transparent;
+
+        &::after {
+            content: '';
+            animation: spin 1s linear infinite;
+            border: 3px solid var(--_loading-color, black);
+            border-right-color: transparent;
+            translate: -50% 0;
+            @apply w-5 h-5 rounded-full absolute left-1/2;
+        }
+    }
+
+    &:has(svg) {
+        padding-block: 8px;
+        padding-inline: 21px;
+        font-size: 14px;
+    }
+
+    &[data-variant="primary"] {
+        --_loading-color: white;
+
+        @apply bg-primary text-white hover:bg-[crimson];
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+*,
+::before,
+::after {
+    font-family: inherit;
+}
+
+.icons-container {
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.container-wrapper {
+    margin-inline: auto;
+    max-width: min(calc(100% - 2 * var(--container-padding)), var(--max-container-width));
+    width: 100%;
+}
+
+[data-cart-items="5"] {
+    position: relative;
+
+    &::after {
+        content: attr(data-cart-items);
+        font-size: 8px;
+        width: 14px;
+        height: 14px;
+        font-weight: 700;
+        background-color: var(--cart-indicator-color, var(--primary-color));
+        @apply text-white grid place-items-center rounded-full top-0 right-0 absolute translate-x-1/2 -translate-y-1/3;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    :root {
+        --header-height: 68px;
+        --container-padding: 24px;
+    }
+
+    body:has(#hp_hero) #header {
+        --icons-color: black;
+    }
+
+    body:has(input#menu-toggle:checked) {
+        overflow: hidden;
+    }
+}
+
+label#hamburger {
+    width: 26px;
+    height: 16px;
+    position: relative;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: .5s ease-in-out;
+    -moz-transition: .5s ease-in-out;
+    -o-transition: .5s ease-in-out;
+    transition: .5s ease-in-out;
+    cursor: pointer;
+
+    span {
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background: #212121;
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .25s ease-in-out;
+        -moz-transition: .25s ease-in-out;
+        -o-transition: .25s ease-in-out;
+        transition: .25s ease-in-out;
+    }
+
+    span:nth-child(1) {
+        top: 0px;
+    }
+
+    span:nth-child(2),
+    span:nth-child(3) {
+        top: 6px;
+    }
+
+    span:nth-child(4) {
+        top: 12px;
+    }
+
+    &:has(input:checked) {
+        span:nth-child(1) {
+            top: 18px;
+            width: 0%;
+            left: 50%;
+        }
+
+        span:nth-child(2) {
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        span:nth-child(3) {
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+
+        span:nth-child(4) {
+            top: 18px;
+            width: 0%;
+            left: 50%;
+        }
+    }
+
+}
+
+.bg-progress-curve {
+    width: calc(100% + 60px) !important;
+    left: -30px !important;
+    height: 200px !important;
+    background-size: contain !important;
+
+    @media (max-width: 1024px) {
+        height: 150px !important;
+        background-size: 100%;
+    }
 }
