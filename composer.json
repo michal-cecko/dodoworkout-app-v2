@@ -7,11 +7,22 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "awcodes/richer-editor": "^2.1",
+        "filament/filament": "^5.4",
+        "filament/spatie-laravel-media-library-plugin": "^5.3",
         "laravel/framework": "^13.8",
-        "laravel/tinker": "^3.0"
+        "laravel/octane": "^2.15",
+        "laravel/tinker": "^3.0",
+        "spatie/laravel-medialibrary": "^11.21",
+        "spatie/laravel-sluggable": "^3.8",
+        "spatie/laravel-translatable": "^6.13",
+        "spiral/roadrunner-cli": "^2.6",
+        "spiral/roadrunner-http": "^3.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "filament/blueprint": "^2.1",
+        "laravel/boost": "^1.8|^2.0",
         "laravel/pail": "^1.2.5",
         "laravel/pao": "^1.0.6",
         "laravel/pint": "^1.27",
@@ -50,7 +61,8 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
@@ -81,6 +93,12 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    "minimum-stability": "beta",
+    "prefer-stable": true,
+    "repositories": {
+        "filament": {
+            "type": "composer",
+            "url": "https://packages.filamentphp.com/composer"
+        }
+    }
 }
