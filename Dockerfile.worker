@@ -1,0 +1,4 @@
+# Worker container — same image as the app, but the compose `command:` runs
+# `php artisan schedule:work` + `php artisan queue:work`.
+# Replace `dodoworkout-app-base:latest` with the Dokploy-assigned base image.
+FROM dodoworkout-app-base:latest
