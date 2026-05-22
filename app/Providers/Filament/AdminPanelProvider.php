@@ -2,10 +2,12 @@
 
 namespace App\Providers\Filament;
 
+use App\Services\LocaleService;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -25,18 +27,35 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('dashboard')
+            ->path('dashboard')
+            ->brandName('DODOWORKOUT')
+            ->brandLogo('/logo/logo-black-red.png')
+            ->darkModeBrandLogo('/logo/logo-white-red.png')
+            ->favicon('/favicon/favicon.ico')
             ->login()
+            ->profile()
+            ->passwordReset()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Cyan,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            ->spa()
+            ->unsavedChangesAlerts()
+            ->databaseTransactions()
+            ->sidebarCollapsibleOnDesktop()
+            ->collapsibleNavigationGroups()
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Prejsť na web')
+                    ->url(fn (): string => LocaleService::localizeUrl(route('homepage')))
+                    ->icon('heroicon-s-link'),
+            ])
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
