@@ -2,12 +2,16 @@
 
 function svgIcon($path, array $attributes = []): false|string
 {
-    if (!file_exists($path)) {
+    // Icons/SVGs live under public/. Resolve relative paths there so the helper
+    // works regardless of the runtime CWD — php-fpm serves from public/, but
+    // Octane/RoadRunner runs with the project root as CWD.
+    $resolved = file_exists($path) ? $path : public_path($path);
+    if (!file_exists($resolved)) {
         throw new \InvalidArgumentException("SVG file not found at path: $path");
     }
 
     // Get the SVG content
-    $svgContent = file_get_contents($path);
+    $svgContent = file_get_contents($resolved);
 
     // Find the opening <svg> tag
     if (preg_match('/<svg\b[^>]*>/i', $svgContent, $matches, PREG_OFFSET_CAPTURE)) {
