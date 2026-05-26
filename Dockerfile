@@ -15,7 +15,7 @@ COPY . /var/www
 RUN git config --global --add safe.directory /var/www \
     && composer run post-autoload-dump \
     && npm run build \
-    && php artisan storage:link || true \
+    && (php artisan storage:link || true) \
     && vendor/bin/rr get-binary --location /usr/local/bin
 
 # ---- Production stage (lean runtime) ----

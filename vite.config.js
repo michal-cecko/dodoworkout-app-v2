@@ -11,7 +11,6 @@ export default defineConfig({
                 'resources/js/home.js',
                 'resources/js/post.js',
                 'resources/css/app.css',
-                'resources/css/filament/dashboard/theme.css',
             ],
             refresh: true,
         }),
