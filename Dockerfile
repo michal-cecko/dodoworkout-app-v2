@@ -1,7 +1,5 @@
 # ---- Build stage (uses base image from "base" service) ----
-# Replace `dodoworkout-app-base:latest` below with the image name Dokploy
-# assigns to the "base" service after deploying Dockerfile.base.
-FROM dodoworkout-app-base:latest AS build
+FROM app-synthesize-wireless-alarm-wasn6t:latest AS build
 
 WORKDIR /var/www
 
