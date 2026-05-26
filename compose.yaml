@@ -1,34 +1,74 @@
-# Dev compose — backing services only. Run the app via `composer dev`
-# (artisan serve + queue:listen + pail + npm run dev concurrently).
+# Local development stack via Laravel Sail (app + pgsql + redis).
+# Production is deployed separately via Dockerfile.base -> Dockerfile (Dokploy).
 services:
-  pgsql:
-    image: postgres:18-alpine
-    ports:
-      - '${FORWARD_DB_PORT:-5432}:5432'
-    environment:
-      POSTGRES_DB: '${DB_DATABASE:-dodoworkout}'
-      POSTGRES_USER: '${DB_USERNAME:-dodoworkout}'
-      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
-    volumes:
-      - dodoworkout-pgsql:/var/lib/postgresql/data
-    healthcheck:
-      test: ['CMD', 'pg_isready', '-q', '-d', '${DB_DATABASE:-dodoworkout}', '-U', '${DB_USERNAME:-dodoworkout}']
-      retries: 3
-      timeout: 5s
-
-  redis:
-    image: redis:alpine
-    ports:
-      - '${FORWARD_REDIS_PORT:-6379}:6379'
-    volumes:
-      - dodoworkout-redis:/data
-    healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
-      retries: 3
-      timeout: 5s
-
+    laravel.test:
+        build:
+            context: ./vendor/laravel/sail/runtimes/8.4
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-8.4/app
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '${APP_PORT:-80}:80'
+            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            IGNITION_LOCAL_SITES_PATH: '${PWD}'
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            - pgsql
+            - redis
+    pgsql:
+        image: 'postgres:18-alpine'
+        ports:
+            - '${FORWARD_DB_PORT:-5432}:5432'
+        environment:
+            POSTGRES_DB: '${DB_DATABASE:-dodoworkout}'
+            POSTGRES_USER: '${DB_USERNAME:-dodoworkout}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+        volumes:
+            - 'dodoworkout-pgsql:/var/lib/postgresql'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - pg_isready
+                - '-q'
+                - '-d'
+                - '${DB_DATABASE:-dodoworkout}'
+                - '-U'
+                - '${DB_USERNAME:-dodoworkout}'
+            retries: 3
+            timeout: 5s
+    redis:
+        image: 'redis:alpine'
+        ports:
+            - '${FORWARD_REDIS_PORT:-6379}:6379'
+        volumes:
+            - 'dodoworkout-redis:/data'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - redis-cli
+                - ping
+            retries: 3
+            timeout: 5s
+networks:
+    sail:
+        driver: bridge
 volumes:
-  dodoworkout-pgsql:
-    driver: local
-  dodoworkout-redis:
-    driver: local
+    dodoworkout-pgsql:
+        driver: local
+    dodoworkout-redis:
+        driver: local

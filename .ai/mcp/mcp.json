@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "laravel-boost": {
+      "command": "/Applications/MAMP/bin/php/php8.3.9/bin/php",
+      "args": [
+        "/Users/michalcecko/Desktop/Webserver/dodoworkout-app-v2/artisan",
+        "boost:mcp"
+      ]
+    }
+  }
+}

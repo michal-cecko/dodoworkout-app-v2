@@ -1,6 +1,8 @@
 import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11.2.6/+esm'
+import { Navigation, Autoplay } from 'https://cdn.jsdelivr.net/npm/swiper@11.2.6/modules/+esm'
 
 const heroSwiper = new Swiper('#hero-swiper', {
+    modules: [Navigation, Autoplay],
     slidesPerView: 1,
     spaceBetween: 60,
     navigation: {
@@ -32,6 +34,7 @@ const heroSwiper = new Swiper('#hero-swiper', {
 })
 
 const workshopsSwiper = new Swiper('#workshops-swiper', {
+    modules: [Navigation],
     slidesPerView: 1,
     loop: false,
     navigation: {
