@@ -21,6 +21,8 @@
     "address": "Address",
     "read_article": "Read Article",
     "learn_more": "Learn More",
+    "no_posts_yet": "No articles yet.",
+    "no_events_yet": "No events yet.",
     "footer_about_heading": "About Me",
     "footer_about_content": "Dominik Klimek, Master Calisthenics and S&C coach.",
     "footer_links_heading": "Links",

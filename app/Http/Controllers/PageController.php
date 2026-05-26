@@ -17,12 +17,22 @@ class PageController extends Controller
 
     public function postsArchive(): View
     {
-        return view('pages.blog');
+        $posts = Post::with(['media', 'tags'])
+            ->visible()
+            ->orderBy('published_at', 'desc')
+            ->paginate(12);
+
+        return view('pages.blog', ['posts' => $posts]);
     }
 
     public function eventsArchive(): View
     {
-        return view('pages.events');
+        $events = Event::with(['media', 'category'])
+            ->visible()
+            ->orderBy('start_at', 'desc')
+            ->paginate(12);
+
+        return view('pages.events', ['events' => $events]);
     }
 
     public function post(string $slug): View

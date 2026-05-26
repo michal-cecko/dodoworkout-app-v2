@@ -88,145 +88,21 @@
     </aside>
 
     <div class="pt-2 card-holder white w-full">
-      <div class="mb-7 text-sm flex gap-6 items-center">
-        <span class="text-textSecondary font-semibold max-lg:hidden">Active filters</span>
-        <div class="flex gap-2 items-center text-xs font-medium">
-          <div class="bg-primary text-white flex items-center gap-2 px-3 py-2 leading-0 rounded-xl">
-            Čadca
-
-            <span>&times;</span>
-          </div>
-          <div class="bg-primary text-white flex items-center gap-2 px-3 py-2 leading-0 rounded-xl">
-            Free
-            <span>&times;</span>
-          </div>
-        </div>
-        <button class="text-textSecondary bg-white border border-[#EDEDED] rounded-lg px-2 py-1 font-medium">Reset filters</button>
-      </div>
-
       <div class="grid grid-cols-2 gap-10 max-lg:grid-cols-1">
-        <!-- Cez data atribut highlight vies zapnut highlight layout -->
-        <div class="card" data-highlight="true">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-          </div>
-
-          <div class="tags">
-            <span class="tag">Achievements</span>
-            <span class="tag">Slovakia</span>
-            <span class="tag">Self development</span>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <time>15. Marec 2024 - 15:48</time>
-            <a href="#" class="cta-link text-primary">Read article</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-          </div>
-
-          <div class="tags">
-            <span class="tag">Achievements</span>
-            <span class="tag">Slovakia</span>
-            <span class="tag">Self development</span>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <time>15. Marec 2024 - 15:48</time>
-            <a href="#" class="cta-link text-primary">Read article</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-          </div>
-
-          <div class="tags">
-            <span class="tag">Achievements</span>
-            <span class="tag">Slovakia</span>
-            <span class="tag">Self development</span>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <time>15. Marec 2024 - 15:48</time>
-            <a href="#" class="cta-link text-primary">Read article</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-          </div>
-
-          <div class="tags">
-            <span class="tag">Achievements</span>
-            <span class="tag">Slovakia</span>
-            <span class="tag">Self development</span>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <time>15. Marec 2024 - 15:48</time>
-            <a href="#" class="cta-link text-primary">Read article</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-          </div>
-
-          <div class="tags">
-            <span class="tag">Achievements</span>
-            <span class="tag">Slovakia</span>
-            <span class="tag">Self development</span>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <time>15. Marec 2024 - 15:48</time>
-            <a href="#" class="cta-link text-primary">Read article</a>
-          </div>
-        </div>
+        @forelse($posts as $post)
+          @include('parts.post-card', ['post' => $post])
+        @empty
+          <p class="text-textSecondary col-span-2 max-lg:col-span-1">{{ __('no_posts_yet') }}</p>
+        @endforelse
       </div>
     </div>
   </div>
-  <div class="flex justify-center mt-auto pt-24">
-    <button class="btn" data-variant="primary">Load more</button>
-  </div>
+
+  @if($posts->hasPages())
+    <div class="flex justify-center mt-auto pt-24">
+      {{ $posts->onEachSide(1)->links() }}
+    </div>
+  @endif
 
   {!! svgIcon("svg/triangle-mesh.svg", ['class' => ['max-lg:hidden absolute top-[60%] w-[calc(100vw * 2)] text-[#FFC1C1]']]) !!}
   {!! svgIcon("svg/dots-mesh.svg", ['class' => ['max-lg:hidden absolute right-10 top-[10%] w-[calc(100vw * 2)] text-[#D9D9D9]']]) !!}
