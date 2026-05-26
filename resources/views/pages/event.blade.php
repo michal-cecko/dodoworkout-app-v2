@@ -28,7 +28,6 @@
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:title" content="{{ $event->title }}"/>
     <meta name="twitter:description" content="{{ $excerpt }}"/>
-    @vite(['resources/css/filament/dashboard/theme.css'])
     @filamentStyles
 @endsection
 
