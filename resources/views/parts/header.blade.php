@@ -16,6 +16,8 @@
 
         <nav class="max-lg:hidden">
             <ul class="uppercase flex gap-12">
+                <li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("blog") }}">{{__("header_blog")}}</a></li>
+                <li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("events") }}">{{__("header_events")}}</a></li>
                 {{--<li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("homepage") }}">{{__("header_about")}}</a></li>--}}
                 {{--<li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("blog") }}">{{__("header_blog")}}</a></li>--}}
                 {{--<li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("trainings") }}">{{__("header_trainings")}}</a></li>--}}
@@ -55,6 +57,8 @@
     </div>--}}
 
     <ul class="flex flex-col uppercase text-3xl font-bold hfont px-2">
+        <li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("blog") }}">{{__("header_blog")}}</a></li>
+        <li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("events") }}">{{__("header_events")}}</a></li>
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("homepage") }}">{{__("header_about")}}</a></li>--}}
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("blog") }}">{{__("header_blog")}}</a></li>--}}
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("trainings") }}">{{__("header_trainings")}}</a></li>--}}
