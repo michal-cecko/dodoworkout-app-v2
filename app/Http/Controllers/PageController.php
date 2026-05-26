@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class PageController extends Controller
@@ -15,24 +16,32 @@ class PageController extends Controller
         return view('pages.home', ['posts' => $posts]);
     }
 
-    public function postsArchive(): View
+    public function postsArchive(Request $request): View
     {
+        $q = trim((string) $request->query('q', ''));
+
         $posts = Post::with(['media', 'tags'])
             ->visible()
+            ->when($q !== '', fn ($query) => $query->whereRaw('title->>? ilike ?', [App::currentLocale(), "%{$q}%"]))
             ->orderBy('published_at', 'desc')
-            ->paginate(12);
+            ->paginate(12)
+            ->withQueryString();
 
-        return view('pages.blog', ['posts' => $posts]);
+        return view('pages.blog', ['posts' => $posts, 'q' => $q]);
     }
 
-    public function eventsArchive(): View
+    public function eventsArchive(Request $request): View
     {
+        $q = trim((string) $request->query('q', ''));
+
         $events = Event::with(['media', 'category'])
             ->visible()
+            ->when($q !== '', fn ($query) => $query->whereRaw('title->>? ilike ?', [App::currentLocale(), "%{$q}%"]))
             ->orderBy('start_at', 'desc')
-            ->paginate(12);
+            ->paginate(12)
+            ->withQueryString();
 
-        return view('pages.events', ['events' => $events]);
+        return view('pages.events', ['events' => $events, 'q' => $q]);
     }
 
     public function post(string $slug): View
