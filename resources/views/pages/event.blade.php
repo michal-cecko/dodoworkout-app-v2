@@ -33,7 +33,7 @@
 
 @section("scripts")
     @filamentScripts
-    <livewire:filament-notifications />
+    <livewire:notifications />
 @endsection
 
 @section('body')
