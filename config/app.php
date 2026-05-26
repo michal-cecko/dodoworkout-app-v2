@@ -84,7 +84,7 @@ return [
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
-    'locales' => ['sk', 'en'],
+    'locales' => [\App\Enums\Locale::SK, \App\Enums\Locale::EN],
 
     /*
     |--------------------------------------------------------------------------
