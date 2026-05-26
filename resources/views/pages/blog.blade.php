@@ -2,10 +2,10 @@
 
 @section('body')
 <section id="blog" class="container-wrapper pt-10 pb-12 pb-sm-24 relative">
-  <span class="block text-primary font-semibold mx-auto w-fit mb-7 uppercase">blog</span>
-  <h1 class="hfont text-4xl font-bold mb-7 text-center uppercase">Articles for Every Athlete</h1>
+  <span class="block text-primary font-semibold mx-auto w-fit mb-7 uppercase">{{ __('blog_eyebrow') }}</span>
+  <h1 class="hfont text-4xl font-bold mb-7 text-center uppercase">{{ __('blog_heading') }}</h1>
   <p class="text-textSecondary text-xl mb-7 text-center mx-auto max-w-[640px] mb-28">
-  Explore my insights on workouts, skills, and mindset to elevate your training and transform your approach to calisthenics.
+  {{ __('blog_intro') }}
   </p>
   <div class="flex gap-14 max-lg:flex-col max-lg:gap-0">
     <aside class="w-[222px] shrink-0 max-lg:w-full">
