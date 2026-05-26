@@ -29,6 +29,9 @@
     <meta name="twitter:title" content="{{ $event->title }}"/>
     <meta name="twitter:description" content="{{ $excerpt }}"/>
     @filamentStyles
+    {{-- Filament's core component CSS (fi-*) is only auto-injected on panel routes;
+         load it here so the embedded registration form is styled on the public page. --}}
+    <link rel="stylesheet" href="{{ asset('css/filament/filament/app.css') }}"/>
 @endsection
 
 @section("scripts")
