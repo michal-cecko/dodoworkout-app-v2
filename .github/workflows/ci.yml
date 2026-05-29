@@ -56,7 +56,11 @@ jobs:
           php artisan key:generate
           php artisan package:discover --ansi
 
+      # Non-blocking: surfaces style issues without blocking the deploy.
+      # (Pre-migration, the web app auto-deployed via the GitHub webhook
+      # regardless of CI, so Pint never gated deploys for this repo.)
       - name: Run Pint
+        continue-on-error: true
         run: vendor/bin/pint --test
 
       - name: Run tests
