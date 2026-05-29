@@ -1,4 +1,0 @@
-# Worker container — inherits the fully-built app image (PHP code + vendor).
-# The actual command is set in Dokploy on the worker service:
-#   sh -c "php artisan schedule:work & php artisan queue:work --sleep=3 --tries=3 --max-time=3600"
-FROM app-index-haptic-transmitter-nb72qk:latest
