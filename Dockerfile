@@ -1,5 +1,24 @@
-# ---- Build stage (uses base image from "base" service) ----
-FROM app-synthesize-wireless-alarm-wasn6t:latest AS build
+# ---- Base stage: PHP 8.4 + extensions + composer + node (self-contained, was Dockerfile.base) ----
+FROM php:8.4-cli-alpine AS base
+
+WORKDIR /var/www
+
+RUN apk add --no-cache \
+    bash git curl nodejs npm \
+    libpng-dev oniguruma-dev libxml2-dev postgresql-dev \
+    icu-dev libzip-dev sqlite-dev xz linux-headers \
+    libjpeg-turbo-dev libwebp-dev freetype-dev imagemagick-dev \
+    autoconf gcc g++ make \
+    && pecl install redis && docker-php-ext-enable redis \
+    && pecl install imagick && docker-php-ext-enable imagick \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
+    && docker-php-ext-install pdo pdo_pgsql pdo_sqlite pgsql mbstring exif pcntl bcmath gd intl zip opcache sockets \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# ---- Build stage ----
+FROM base AS build
 
 WORKDIR /var/www
 
@@ -73,4 +92,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
 
 ENV LOG_CHANNEL=single
 
-CMD ["bash", "-c", "chown -R www-data:www-data /var/www/storage && php artisan cache:clear && php artisan optimize && touch storage/logs/laravel.log && tail -f storage/logs/laravel.log & php artisan octane:start --server=roadrunner --host=0.0.0.0 --port=8000 --workers=auto --max-requests=500"]
+CMD ["bash", "-c", "chown -R www-data:www-data /var/www/storage && php artisan cache:clear && php artisan optimize && touch storage/logs/laravel.log && tail -f storage/logs/laravel.log & php artisan octane:start --server=roadrunner --host=0.0.0.0 --port=8000 --workers=2 --max-requests=500"]
