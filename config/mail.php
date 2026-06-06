@@ -122,4 +122,20 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Global "Reply-To" Address
+    |--------------------------------------------------------------------------
+    |
+    | Every email sent by the application will carry this reply-to address,
+    | so replies from users land in this inbox regardless of the sending
+    | address configured above.
+    |
+    */
+
+    'reply_to' => [
+        'address' => env('MAIL_REPLY_TO_ADDRESS', null),
+        'name' => env('MAIL_REPLY_TO_NAME', env('APP_NAME', 'Laravel')),
+    ],
+
 ];
