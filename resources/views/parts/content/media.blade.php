@@ -1,5 +1,7 @@
 @if(!empty($image = ($content['data']['image'] ?? null)))
     @php($src = \Storage::disk('public')->url($image))
+    @php($desc = $content['data']['description'] ?? null)
+    @php($descRenderer = ! empty($desc) ? \Filament\Forms\Components\RichEditor\RichContentRenderer::make($desc) : null)
     <div class="image-container">
         <div class="image-container-image">
             @if(!empty($video = $content['data']['is_video']))
@@ -9,13 +11,13 @@
                 </video>
             @else
                 <a data-fslightbox href="{{ $src }}">
-                    <img src="{{ $src }}" alt="{{$content['data']['description'] ?? ""}}">
+                    <img src="{{ $src }}" alt="{{ $descRenderer?->toText() ?? '' }}">
                 </a>
             @endif
         </div>
-        @if(!empty($desc = ($content['data']['description'] ?? null)))
+        @if($descRenderer)
             <p class="image-container-caption">
-                {{$desc}}
+                {!! $descRenderer->toHtml() !!}
             </p>
         @endif
     </div>
